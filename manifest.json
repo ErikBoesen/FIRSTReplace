@@ -1,0 +1,15 @@
+{
+	"manifest_version": 2,
+	"name": "FIRST Replace",
+	"description": "Replace numbers in page with their respective FRC team names.",
+	"version": "1.0",
+	"content_scripts": [{
+		"matches": [
+			"*://*/*"
+		],
+		"js": [
+			"content.js"
+		],
+		"run_at": "document_end"
+	}]
+}

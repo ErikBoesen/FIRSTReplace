@@ -1,2 +1,2 @@
-# FIRSTReplace
-Chrome extension to replace numbers on page with that FRC team's name.
+# FIRST Replace
+Replace numbers in the page with their respective team name.
