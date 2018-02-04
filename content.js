@@ -1,46 +1,23 @@
-// Make an array of all the elements on the page.
-var elements = document.getElementsByTagName('*');
+console.log('FIRSTREPLACE ACTIVE');
+
+var regex = /[0-9]{2,4}/g;
+
+function getName(num) {
+	var req = new XMLHttpRequest();
+	req.open('GET', 'https://www.thebluealliance.com/api/v3/team/frc' + num + '/simple', false);
+	req.setRequestHeader('X-TBA-Auth-Key', 'Kz3o9D0asfHVbC9Jmlnmx1RFHPaBJlFpixHcTa25tY4RpGdEZ3dbMtvnfW7E5Hxt')
+	req.send(null);
+
+	if (req.status === 200)
+		return JSON.parse(req.responseText).nickname;
+}
 
 // Go through all the elements
-for (i = 0; i < elements.length; i++) {
-	var element = elements[i];
-
-    // Go through all the child elements of each element.
-	for (j = 0; j < element.childNodes.length; j++) {
-		var node = element.childNodes[j];
-
-		if (node.nodeType === 3) {
-            var found = [];
-			var text = node.nodeValue;
-			for (k = 7000; k > 0; k--) {
-                if (text.search(String(k)) != -1) {
-                    found += k;
-                }
-            }
-            var foundNames = [];
-            if (found.length > 0) {
-                for (k = 0; k < found.length; k++) {
-                    var apiReq = new XMLHttpRequest();
-        			apiReq.open('GET', 'http://www.thebluealliance.com/api/v2/team/frc' + k + '?X-TBA-App-Id=erikboesen:firstreplace:v1.0', false);
-        			apiReq.onreadystatechange = function() {
-                        var obj = JSON.parse(apiReq.responseText);
-                        if (obj.length > 1) {
-                            foundNames += obj.nickname;
-                        } else {
-                            foundNames += found[i];
-                        }
-                    };
-        			apiReq.send(null);
-                }
-            }
-            for (k = 0; k < foundNames.length; k++) {
-                console.log('Replacing ' + found[i] + ' with ' + foundNames[i]);
-                var replacedText = text.replace(new RegExp(found[i], 'gi'), foundNames[i]);
-            }
-
-			if (replacedText !== text) {
-				element.replaceChild(document.createTextNode(replacedText), node);
-			}
-		}
-	}
+var html = document.body.innerHTML;
+var m;
+while (true) {
+	m = regex.exec(html);
+	if (m == null) break;
+	html = html.replace(m, getName(m));
 }
+document.body.innerHTML = html;
