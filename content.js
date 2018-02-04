@@ -18,8 +18,8 @@ var m;
 // There is no elegance here, only sleep deprivation and regret
 var count = 0;
 while (true) {
-	m = regex.exec(html);
-	if (m == null || count > 40) break;
+	m = regex.exec(document.body.textContent);
+	if (m == null || count > 400) break;
 	html = html.replace(m, getName(m));
 	count++;
 }
