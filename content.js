@@ -16,11 +16,9 @@ function getName(num) {
 var html = document.body.innerHTML;
 var m;
 // There is no elegance here, only sleep deprivation and regret
-var count = 0;
-while (true) {
+for (count = 0; count < 40; count++) {
 	m = regex.exec(document.body.textContent);
-	if (m == null || count > 400) break;
+	if (m == null) break;
 	html = html.replace(m, getName(m));
-	count++;
 }
 document.body.innerHTML = html;
